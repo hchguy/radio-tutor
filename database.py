@@ -92,3 +92,11 @@ def delete_user(student_id):
     c.execute('DELETE FROM users WHERE student_id = ?', (student_id,))
     conn.commit()
     conn.close()
+
+def get_active_users():
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("SELECT student_id, name, email, phone, status FROM users WHERE status = 'Active'")
+    users = c.fetchall()
+    conn.close()
+    return users
