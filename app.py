@@ -6,7 +6,7 @@ import os
 from PIL import Image
 
 # 페이지 설정
-st.set_page_config(page_title="방사선사 국가시험 AI 튜터", page_icon="🩺", layout="wide")
+st.set_page_config(page_title="마산대학교 방사선과 국가시험 AI 튜터", page_icon="🩺", layout="wide")
 
 # CSS 스타일 적용 (카메라 안내 메시지 제거 포함)
 st.markdown("""
