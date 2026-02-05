@@ -80,23 +80,43 @@ if not st.session_state.logged_in:
 
 elif st.session_state.admin_mode:
     st.title("🛡️ 관리자 대시보드")
-    tab1, tab2 = st.tabs(["회원 승인 관리", "시스템 설정 (API)"])
+    # 탭을 3개로 늘립니다.
+    tab1, tab2, tab3 = st.tabs(["승인 대기 회원", "승인 완료 회원", "시스템 설정 (API)"])
+    
     with tab1:
+        st.subheader("승인 대기 중인 회원")
         pending = get_pending_users()
         if not pending: st.info("대기 회원 없음")
         else:
             for u in pending:
                 c1, c2, c3 = st.columns([2,1,1])
-                c1.write(f"{u[1]}({u[0]})")
+                c1.write(f"👤 {u[1]} ({u[0]})")
                 if c2.button("승인", key=f"a_{u[0]}"): update_user_status(u[0], 'Active'); st.rerun()
                 if c3.button("거절", key=f"r_{u[0]}"): update_user_status(u[0], 'Rejected'); st.rerun()
+                
     with tab2:
+        st.subheader("현재 활동 중인 회원")
+        # 새로 만든 get_active_users 함수를 사용합니다.
+        active = get_active_users() 
+        if not active: st.info("승인된 회원 없음")
+        else:
+            for u in active:
+                c1, c2 = st.columns([3,1])
+                c1.write(f"✅ {u[1]} ({u[0]}) | {u[2]}")
+                # 비활성화 버튼 클릭 시 상태를 다시 'Pending'으로 바꿉니다.
+                if c2.button("비활성화", key=f"d_{u[0]}"): 
+                    update_user_status(u[0], 'Pending')
+                    st.success(f"{u[1]} 학생이 비활성화되었습니다.")
+                    st.rerun()
+                    
+    with tab3:
         st.subheader("공용 API 설정")
         curr = get_setting("GEMINI_API_KEY")
         new_key = st.text_input("Gemini API Key", value=curr if curr else "", type="password")
         if st.button("저장"):
             set_setting("GEMINI_API_KEY", new_key)
             st.success("저장 완료!")
+
 
 else:
     st.title("🧠 AI 방사선 영상 분석")
