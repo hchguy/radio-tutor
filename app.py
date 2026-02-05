@@ -8,20 +8,30 @@ from PIL import Image
 # 페이지 설정
 st.set_page_config(page_title="마산대학교 방사선과 국가시험 AI 튜터", page_icon="🩺", layout="wide")
 
-# CSS 스타일 적용 (카메라 안내 메시지 제거 포함)
+# CSS 스타일 적용 (카메라 안내 메시지 완벽 제거)
 st.markdown("""
     <style>
-    /* 기존 스타일 */
+    /* 기본 버튼 및 헤더 스타일 */
     .stButton>button { width: 100%; border-radius: 5px; height: 3em; background-color: #004a99; color: white; }
     h1, h2, h3 { color: #004a99; }
     
-    /* 카메라 권한 안내 메시지 숨기기 */
+    /* 1. 카메라 권한 안내 영역 전체 숨기기 (가장 확실한 방법) */
     [data-testid="stCameraInputPermission"] {
         display: none !important;
     }
     
-    /* 카메라 설명 텍스트 숨기기 (선택사항) */
-    .st-emotion-cache-1v0z8nx {
+    /* 2. 텍스트 안내 문구 및 링크 숨기기 */
+    .st-emotion-cache-1v0z8nx, .st-emotion-cache-1p1n6v9, .st-emotion-cache-6q9sum {
+        display: none !important;
+    }
+    
+    /* 3. 안내 창의 배경 박스 숨기기 */
+    div[class*="stCameraInput"] > div:first-child {
+        display: none !important;
+    }
+    
+    /* 4. 카메라 아이콘 옆의 텍스트 숨기기 */
+    .st-emotion-cache-zq59db {
         display: none !important;
     }
     </style>
