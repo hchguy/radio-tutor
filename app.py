@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from database import init_db, add_user, authenticate_user, get_user, get_pending_users, update_user_status, delete_user, set_setting, get_setting
+from database import init_db, add_user, authenticate_user, get_user, get_pending_users, update_user_status, delete_user, set_setting, get_setting, get_active_users
 from ai_tutor import analyze_image
 import os
 from PIL import Image
